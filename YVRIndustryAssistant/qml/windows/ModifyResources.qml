@@ -83,16 +83,18 @@ Rectangle {
                         {
                             id: titleItem
                             property bool select: selectItem[index]
-                            width: title.contentHeight + 32
+                            width: 56
                             height: 26
                             color:titleItem.select ? "#3476FB" :"#555763"
                             radius: 4
                             Text {
-                                id: title
                                 anchors.centerIn: parent
+                                width: 46
                                 color: "#C4C4C4"
                                 font.pixelSize: 12
                                 text: modelData
+                                elide: Text.ElideRight
+                                horizontalAlignment: Text.AlignHCenter
                             }
 
                             MouseArea

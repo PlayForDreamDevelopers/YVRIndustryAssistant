@@ -220,7 +220,15 @@ Item {
                                 anchors.fill: parent
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: {
-                                    yvr.pause(fileIndex)
+                                    subWindow.source = "qrc:/qml/windows/Reconfirm.qml"
+                                    subWindow.item.showContent = qsTr("取消后，可重新发布")
+                                    subWindow.item.showTitle = qsTr("取消发布")
+                                    subWindow.item.showImage = "qrc:/res/image/yvr_tips_cancel.png"
+                                    subWindow.item.ensure.connect(function(){
+                                        yvr.pause(fileIndex)
+                                    })
+
+                                    mainWin.showSubWin()
                                 }
                             }
                         }

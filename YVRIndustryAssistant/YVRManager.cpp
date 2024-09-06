@@ -29,7 +29,14 @@ YVRManager::YVRManager(QObject *parent) : QObject(parent)
     m_UDPBroadCast->startUDPBroadCast(YVRWebServerPort - 1);
     m_monitor->startWebsocket(YVRWebServerPort);
 
-    startTimer(2000);
+    m_resourcesListAdd = new ResourceAddListModel(this);
+    // m_resourcesListAdd->load(JsonFileParse::ins()->fileList());
+    auto task = [=](){ m_resourcesListAdd->load(JsonFileParse::ins()->fileList());};
+
+    std::thread t(task);
+    t.detach();
+
+    //startTimer(2000);
 }
 
 YVRManager::~YVRManager()
@@ -221,16 +228,6 @@ QVariant YVRManager::resourcesList()
 
 QVariant YVRManager::resourcesListAdd()
 {
-    if(m_resourcesListAdd == nullptr)
-    {
-        m_resourcesListAdd = new ResourceAddListModel(this);
-        // m_resourcesListAdd->load(JsonFileParse::ins()->fileList());
-        auto task = [=](){ m_resourcesListAdd->load(JsonFileParse::ins()->fileList());};
-
-        std::thread t(task);
-        t.detach();
-    }
-
     return QVariant::fromValue(m_resourcesListAdd);
 }
 

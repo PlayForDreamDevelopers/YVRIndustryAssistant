@@ -74,24 +74,12 @@ Rectangle{
             color: "#DBDBDB"
         }
 
-
-        Text {
-            Layout.leftMargin: 34
-            Layout.maximumWidth: 452
-            wrapMode: Text.WrapAnywhere
-            text: qsTr("视频A在设备1播放后，设备1不出现在视频B中，只有设备1先解除视频A，在可以在视频2的列表中看到设备1。")
-            font.pixelSize: 12
-            font.bold: true
-            color: "#6E6E6E"
-        }
-
         Rectangle{
             Layout.leftMargin: 34
-            width: 452
+            width: 482
             height: 222
             color: "#45454B"
             radius: 8
-
 
             RowLayout{
                 spacing: 0

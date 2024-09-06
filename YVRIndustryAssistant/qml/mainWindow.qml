@@ -1,4 +1,4 @@
-﻿import QtQuick 2.12
+﻿import QtQuick 2.14
 import QtShark.Window 1.0
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.2
@@ -167,12 +167,12 @@ FramelessWindow {
         visible: subWindow.source.toString() !== "" &&  subWindow.item.visible
         anchors.fill: parent
         color: "#1A1B21"
-        enabled: false
 
         opacity: 0.3
 
         MouseArea{
             anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
             propagateComposedEvents: false
         }
     }
@@ -181,6 +181,12 @@ FramelessWindow {
         id: subWindow
         anchors.centerIn: parent
         visible: false
+
+        MouseArea{
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            propagateComposedEvents: false
+        }
     }
 
     Utils{

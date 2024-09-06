@@ -86,14 +86,9 @@ Item {
                 showIcon: "qrc:/res/image/yvr_play.png"
             }
             YVRImageText{
+                Layout.rightMargin: 57
                 showText: qsTr("暂停")
                 showIcon: "qrc:/res/image/yvr_pause.png"
-            }
-
-            YVRImageText {
-                Layout.rightMargin: 57
-                showText: qsTr("播放异常")
-                showIcon: "qrc:/res/image/yvr_play_error.png"
             }
         }
 
@@ -255,7 +250,7 @@ Item {
             }
 
             YVRIconButton{
-                visible: selectDevice
+                visible: false
                 showIcon: "qrc:/res/image/yvr_action_preview.png"
                 showText: qsTr("监控")
             }

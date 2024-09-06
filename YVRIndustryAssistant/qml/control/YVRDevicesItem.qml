@@ -166,6 +166,7 @@ Rectangle {
                 Layout.preferredWidth: 32
                 color: "#4C4C4C"
                 radius: 32
+                visible: false
 
                 Image {
                     anchors.fill: parent

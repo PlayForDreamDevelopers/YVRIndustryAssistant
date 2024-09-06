@@ -171,6 +171,7 @@ Image {
                         }
 
                         Image {
+                            visible: index !== 0
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.right: parent.right
                             anchors.rightMargin: 24
@@ -190,6 +191,10 @@ Image {
 
                                 if(mouse.button === Qt.RightButton)
                                 {
+
+                                    if(index === 0)
+                                        return
+
                                     subWindow.source = "qrc:/qml/windows/ModifyVideoType.qml"
                                     subWindow.item.pos = index
                                     subWindow.item.name = modelData
@@ -203,6 +208,7 @@ Image {
                                 }else
                                 {
                                     curIndex = index
+                                    // yvr.resourcesListModelAdd.showGroup(index)
                                 }
                             }
                         }
@@ -311,7 +317,7 @@ Image {
                                 {
                                     subWindow.source = "qrc:/qml/windows/AddResources.qml"
                                     subWindow.item.isPlayControl = true
-                                    subWindow.item.selectItem = yvr.resourcesListModelAdd.getGroupSelect(fileIndex)
+                                    subWindow.item.selectIndex = groupIndex
                                     mainWin.showSubWin()
                                 }else
                                 {
@@ -326,7 +332,7 @@ Image {
                                     subWindow.item.showNameText = showName
                                     subWindow.item.fileDescText = describe
                                     subWindow.item.type =  typeIndex - 4
-                                    subWindow.item.selectItem = yvr.resourcesListModelAdd.getGroupSelect(fileIndex)
+                                    subWindow.item.selectIndex = groupIndex
                                     subWindow.item.isVideo = typeImageVideo
 
                                     var pos = mapToItem(root, 0, 0)
@@ -338,7 +344,7 @@ Image {
                                 }
                             }
                         }
-                    }
+                   }
                }
             }
         }

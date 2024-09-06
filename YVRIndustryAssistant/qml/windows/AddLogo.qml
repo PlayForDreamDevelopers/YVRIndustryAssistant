@@ -70,7 +70,7 @@ Rectangle {
             Text {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.topMargin: 24
-                text: qsTr("请上传138px*51px，png/jpg格式LOGO")
+                text: qsTr("请上传322*126px，png/jpg格式LOGO")
                 font.pixelSize: 10
                 font.bold: true
                 color: "#DBDBDB"

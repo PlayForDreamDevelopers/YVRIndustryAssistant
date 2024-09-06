@@ -52,9 +52,9 @@ ConnectManager::ConnectManager(QObject *parent):  QObject(parent)
     //test();
     //startTimer(1000);
 
-    m_powerShellCmd = new QProcess(this);
-    connect(m_powerShellCmd , &QProcess::readyReadStandardOutput , this , &ConnectManager::on_readoutput);
-    testNetworkCategory();
+//    m_powerShellCmd = new QProcess(this);
+//    connect(m_powerShellCmd , &QProcess::readyReadStandardOutput , this , &ConnectManager::on_readoutput);
+//    testNetworkCategory();
 }
 
 void ConnectManager::startUDPBroadCast(int port)
