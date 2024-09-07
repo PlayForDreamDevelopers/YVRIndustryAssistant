@@ -13,20 +13,23 @@ FramelessWindow {
 
     property int main_width: 1280
     property int main_height: 720
+    property int scaleSize: 1
     property int pageIndex: YVRManagerCLS.DeviceManager
     id: mainWin
-    property int preWidth: 1280
+    //property int preWidth: 1280
     property bool hasDevices: yvr.curSN !== ""
     visible: true
     title: qsTr("玩出梦想行业助手")
-    width: 1280
-    height: 720
+    width: main_width * scaleSize
+    height: main_height * scaleSize
     color: "transparent"
     titleBar: titleBar
 
     Rectangle{
-        width: mainWin.width
-        height: mainWin.height
+        scale: scaleSize
+        width: 1280
+        height: 720
+        anchors.centerIn: parent
         color: utils.yvr_backgroundcolor
 
         ColumnLayout{
@@ -160,7 +163,11 @@ FramelessWindow {
             }
         }
 
-        Component.onCompleted: showPage(YVRManagerCLS.DeviceManager)
+        Component.onCompleted: {
+            showPage(YVRManagerCLS.DeviceManager)
+            mainWin.x = 320
+            mainWin.y = 160
+        }
     }
 
     Rectangle{
@@ -172,7 +179,7 @@ FramelessWindow {
 
         MouseArea{
             anchors.fill: parent
-            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            acceptedButtons: Qt.AllButtons
             propagateComposedEvents: false
         }
     }
@@ -181,10 +188,11 @@ FramelessWindow {
         id: subWindow
         anchors.centerIn: parent
         visible: false
+        scale: scaleSize
 
         MouseArea{
             anchors.fill: parent
-            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            acceptedButtons: Qt.AllButtons
             propagateComposedEvents: false
         }
     }

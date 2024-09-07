@@ -12,27 +12,14 @@
 #include <QDebug>
 #include <QTime>
 #include "plugins/JsonFileParse.h"
+#include "Settings.h"
 
-void ResourceListModel::load(const QJsonArray &data)
+void ResourceListModel::load()
 {
     beginResetModel();
     m_data.clear();
-    for(QJsonValue item : data)
-    {
-        auto itemObj = item.toObject();
-
-        ShowFileInfo info;
-
-        info.poster = itemObj["realPoster"].toString();
-        info.realFile = itemObj["realFile"].toString();
-        info.id = itemObj["index"].toInt();
-        info.type = static_cast<YVRResourceType>(itemObj["type"].toInt());
-        info.showName = itemObj["showName"].toString();
-
-        m_data.append(info);
-    }
-
-     endResetModel();
+    Settings::Instance().getShowFileInfos(m_data);
+    endResetModel();
 }
 
 void ResourceListModel::clear()

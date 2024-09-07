@@ -16,7 +16,7 @@ class VRPlayListModel : public QAbstractListModel
 public:
     explicit VRPlayListModel(QObject *parent = nullptr);
 
-    void load(QList<YVRPlayDevice>& data, int count);
+    void load(QList<YVRPlayDevice>& data, int count, int disable);
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -26,6 +26,7 @@ public:
     virtual QHash<int, QByteArray> roleNames() const override;
 
     Q_INVOKABLE void select(int index, bool selected);
+    Q_INVOKABLE int getDisable();
 
 
     QStringList deviceSNs(bool selectAll);
@@ -37,6 +38,7 @@ public:
 private:
     QList<YVRPlayDevice> m_data;
     int m_selectCount;
+    int m_disable;
 };
 
 #endif // VRPlayListModel_H

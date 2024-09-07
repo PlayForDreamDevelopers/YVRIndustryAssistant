@@ -329,10 +329,10 @@ Item {
             clip: true
 
             delegate: Item {
-                id: delegateItem
                 width: 378
                 height: 233
                 YVRDevicesItem {
+                    id: delegateItem
                     vrItemSn: vrSN
                     vrItemGroup: vrGroup
                     vrItemId: vrID
@@ -353,8 +353,8 @@ Item {
                         menu.vrGroup = vrGroup
                         menu.sn = vrSN
 
-                        menu.x = pos.x + 132
-                        menu.y = pos.y  + 215
+                        menu.x = pos.x + delegateItem.width  - 220
+                        menu.y = pos.y  + delegateItem.height + 5
                         menu.open()
                     }
                 }

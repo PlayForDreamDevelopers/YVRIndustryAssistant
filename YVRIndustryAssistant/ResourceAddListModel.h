@@ -18,25 +18,19 @@ class ResourceAddListModel:  public QAbstractListModel
 public:
     ResourceAddListModel(QObject *parent = nullptr);
 
-    void load(const QJsonArray& data);
+    void load();
 
     Q_INVOKABLE void deletebyIndex(int index);
     Q_INVOKABLE void move(int from, int to);
-    Q_INVOKABLE void add(QString showName, QString desc, QString file, QString poster, int type, QList<bool> select);
-    Q_INVOKABLE void modify(int index, QString showName, QString desc, QString file, QString poster, int type, QList<bool> select);
-    Q_INVOKABLE void clear();
+    Q_INVOKABLE void add(QString showName, QString desc, QString file, QString poster, int type, int groupIndex);
+    Q_INVOKABLE void modify(int index, QString showName, QString desc, QString file, QString poster, int type, int groupIndex);
     Q_INVOKABLE void modifyGroup(int index, QString group);
     Q_INVOKABLE int addOrDelGroup(int index, bool add = false);
-    Q_INVOKABLE QList<bool> getGroupSelect(int index);
-
-    void fileArrayLocal(QJsonArray & arr, bool copy);
-    void fileArray(QJsonArray & arr , QString desPath);
-
-    FileInfo getbyIndex(int index);
+    Q_INVOKABLE void showGroup(int index);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
-
+    void clear();
     bool getInit();
     QString getLogo() const;
     void setLogo(QString path);
@@ -46,7 +40,7 @@ public:
     void setContent(QString content);
     QStringList getVideoGroups();
 
-    void save(bool copy);
+    void save();
 
 signals:
      void logoChange();
@@ -63,12 +57,14 @@ protected:
 
     QString fileMd5(QString sourceFilePath, qint64 &size);
 private:
-    QList<FileInfo> m_data;
+    QList<FileInfo>* m_data;
+    QVector<int> m_groupIndexToIndex;
     QString m_appLocalDataLocation;
     QString m_localFileLocation;
     QString m_logo;
     QString m_name;
     QString m_content;
+    int m_curGroupIndex;
     QStringList m_videoGroups;
 };
 

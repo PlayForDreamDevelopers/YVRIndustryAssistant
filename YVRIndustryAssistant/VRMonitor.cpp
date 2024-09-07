@@ -96,6 +96,19 @@ void VRMonitor::control()
     }
 }
 
+void VRMonitor::modiftyDevice(QString sn, int id)
+{
+    QJsonObject obj;
+    obj["type"] = VRMsgType::Controlled;
+
+    QJsonObject data;
+    data["controlled"] = Settings::Instance().getControl();
+
+    data["id"] =  id;
+    obj["data"] = data;
+    sendMsg(obj, sn);
+}
+
 void VRMonitor::startAutonomous(QString sn)
 {
     QJsonObject obj;

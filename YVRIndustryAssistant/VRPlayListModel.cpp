@@ -10,9 +10,10 @@ VRPlayListModel::VRPlayListModel(QObject *parent)
 
 }
 
-void VRPlayListModel::load(QList<YVRPlayDevice> &data, int count)
+void VRPlayListModel::load(QList<YVRPlayDevice> &data, int count, int disable)
 {
     m_selectCount = count;
+    m_disable = disable;
     selectCountChange();
     beginResetModel();
     m_data = data;
@@ -67,6 +68,7 @@ QHash<int, QByteArray> VRPlayListModel::roleNames() const
 
 void VRPlayListModel::select(int index, bool selected)
 {
+
     if(!m_data[index].canSelect)
         return;
 
@@ -81,6 +83,11 @@ void VRPlayListModel::select(int index, bool selected)
     QModelIndex topleft = createIndex(index, 3);
     QModelIndex bottomRight = createIndex(index,3);
     dataChanged(topleft, bottomRight);
+}
+
+int VRPlayListModel::getDisable()
+{
+    return m_disable;
 }
 
 QStringList VRPlayListModel::deviceSNs(bool selectAll)

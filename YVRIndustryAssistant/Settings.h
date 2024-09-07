@@ -3,11 +3,13 @@
 
 #include <QMap>
 #include <QObject>
+#include "DefineData.h"
 
 class Settings: public QObject
 {
 public:
     static Settings& Instance();
+    void load();
 
     void setFirstPlayControl(bool is);
     bool getFirstPlayControl();
@@ -24,13 +26,24 @@ public:
     void modiftyDevices(QString sn, int id);
     bool verifyId(QString sn, QString id);
 
+    QList<FileInfo> & getFileInfos(int index);
+    void removeGroup(int index);
+    void getShowFileInfos(QList<ShowFileInfo> & showinfos);
+
+    void deployment(QString desPath);
+    void deploymentLocal(QString desPath);
+
     void save();
+    void clear();
+
 private:
     Settings(QObject* parent);
+
     bool m_firstPalyControl = true;
     bool m_firstAddDevice = true;
-    bool m_control = true;
+    bool m_control = false;
     QMap<QString, int> m_allIndex;
+    QMap<int, QList<FileInfo>> m_fileInfos;
 };
 
 #endif // SETTINGS_H

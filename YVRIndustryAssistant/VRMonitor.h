@@ -22,6 +22,7 @@ public:
 
     void uncontrol();
     void control();
+    void modiftyDevice(QString sn, int id);
 
     void startAutonomous(QString sn);
     void rebootP(bool all);

@@ -12,7 +12,7 @@ class ResourceListModel:  public QAbstractListModel
 public:
     ResourceListModel(QObject *parent = nullptr);
 
-    void load(const QJsonArray& data);
+    void load();
 
     void clear();
 

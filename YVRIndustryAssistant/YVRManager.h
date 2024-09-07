@@ -53,6 +53,7 @@ public:
     Q_INVOKABLE void rebootP(bool selectAll);
     Q_INVOKABLE void rebootN(QString sn);
     Q_INVOKABLE void rebootP(QString sn);
+    Q_INVOKABLE void modiftyDevice(QString sn, QString id);
 
     Q_INVOKABLE void addDiscoverDeice(bool selectAll);
     Q_INVOKABLE void loadDevicesExcel(QString path);

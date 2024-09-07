@@ -88,5 +88,6 @@
         <file>res/image/yvr_release.png</file>
         <file>qml/windows/PublishPage.qml</file>
         <file>qml/control/YVRResourcesItem.qml</file>
+        <file>res/image/yvr_disable.png</file>
     </qresource>
 </RCC>

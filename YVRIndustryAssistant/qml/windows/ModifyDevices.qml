@@ -65,9 +65,15 @@ Rectangle {
                          if(yvr.verfityId(deviceSN, input.text))
                          {
                              if(discover)
+                             {
                                 yvr.vrDicoverListModel.modifyDevice(deviceSN, input.text,deviceGroups.curGroup)
+                             }
                              else
+                             {
                                 yvr.vrListModel.modifyDevice(deviceSN, input.text,deviceGroups.curGroup)
+                             }
+
+                             yvr.modiftyDevice(deviceSN, input.text)
 
                              mainWin.hideSubWin()
                          }else

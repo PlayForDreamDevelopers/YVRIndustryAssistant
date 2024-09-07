@@ -300,19 +300,28 @@ QVariant VRListModel::getPlayVRList(int index)
 
     QList<YVRPlayDevice> data;
     int count = 0;
-
+    int disableCount = 0;
     for(auto & item : m_dataMap)
     {
+
         YVRPlayDevice device;
         device.id = item.id;
         device.sn = item.sn;
-        device.canSelect = item.playStatus != 0;
+        device.canSelect = item.playStatus != 0 || item.video == index;
 
         if(item.offline)
         {
             device.status = "离线";
         }else {
-            device.status = QString(item.controled ? "受控" : "未受控") + (device.canSelect ? "空闲": "播放");
+            if(!item.controled)
+                device.status = "自由";
+            else
+            {
+                if(item.playStatus == 0)
+                    device.status = "播放中";
+                else
+                    device.status = "待机";
+            }
         }
 
         device.hasSelect = item.video == index;
@@ -320,10 +329,13 @@ QVariant VRListModel::getPlayVRList(int index)
         if(device.hasSelect)
             count++;
 
+        if(!device.canSelect)
+            disableCount++;
+
         data.append(device);
     }
 
-    m_pVRPlayList->load(data, count);
+    m_pVRPlayList->load(data, count, disableCount);
 
     return QVariant::fromValue(m_pVRPlayList);
 }

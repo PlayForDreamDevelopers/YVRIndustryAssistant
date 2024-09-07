@@ -12,7 +12,8 @@ Image {
     id: root
     anchors.fill: parent
     source: "qrc:/res/image/yvr_playcontrol_back.png"
-    property int curIndex: -1
+    property int curIndex: 0
+    property int maxIndex: 1
 
     Rectangle{
         width: parent.width
@@ -188,7 +189,6 @@ Image {
                             hoverEnabled: true
                             acceptedButtons: Qt.LeftButton | Qt.RightButton
                             onClicked: {
-
                                 if(mouse.button === Qt.RightButton)
                                 {
 
@@ -208,7 +208,7 @@ Image {
                                 }else
                                 {
                                     curIndex = index
-                                    // yvr.resourcesListModelAdd.showGroup(index)
+                                    yvr.resourcesListModelAdd.showGroup(index)
                                 }
                             }
                         }
@@ -323,6 +323,7 @@ Image {
                                 {
 
                                     subWindow.source = "qrc:/qml/windows/ModifyResources.qml"
+                                    subWindow.item.isVideo = typeImageVideo
                                     subWindow.item.isPlayControl = true
                                     subWindow.item.showNameText = showName
                                     subWindow.item.index = index
@@ -331,9 +332,8 @@ Image {
                                     subWindow.item.file = file
                                     subWindow.item.showNameText = showName
                                     subWindow.item.fileDescText = describe
-                                    subWindow.item.type =  typeIndex - 4
+                                    subWindow.item.type = typeImageVideo ?  typeIndex - 4 : typeIndex
                                     subWindow.item.selectIndex = groupIndex
-                                    subWindow.item.isVideo = typeImageVideo
 
                                     var pos = mapToItem(root, 0, 0)
                                     menu.x = pos.x + 32

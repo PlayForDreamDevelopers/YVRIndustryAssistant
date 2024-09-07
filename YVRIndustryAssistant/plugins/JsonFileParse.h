@@ -11,9 +11,11 @@ public:
     static JsonFileParse* ins();
     void loadFile();
 
-    void updateFile(QJsonArray fileList);
-    void updateDevice(QJsonArray& vrList, QStringList group);
 
+    void deploymentLocal(QJsonArray fileList);
+    void deployment(QJsonArray fileList, QString path, QString logo);
+
+    void updateDevice(QJsonArray& vrList, QStringList group);
     void setPort(int port);
     void setLogo(QString path);
     void setLocalFile(QString path);
@@ -23,19 +25,17 @@ public:
     QString getContent();
     void setPlayControl(bool  autoControl);
     bool getPlayControl();
-    void deployment(QJsonArray fileList, QString path);
-    void updateLocal();
     void updateGroups(QStringList groups, QString name, QString content);
     void copy(QString sourcePoster, QString sourceFile,  QString desPath, QString fileName);
 
-    QJsonArray & fileList();
+    QJsonArray localFileList(int index);
     QJsonArray & vrList();
     QJsonArray & groups();
     QJsonArray & videoGroups();
 
 private:
    JsonFileParse();
-   QJsonArray m_fileList;
+   QJsonArray m_localFileList;
    QJsonArray m_vrList;
    QJsonArray m_groups;
    QJsonArray m_videoGroups;

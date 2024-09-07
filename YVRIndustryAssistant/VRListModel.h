@@ -14,7 +14,7 @@ struct YVRDevice{
     bool offline = true; // 设备状态
     bool onuse = false;
     bool controled = false;
-    int playStatus;
+    int playStatus = 1;
     DeviceType type  = DeviceType::YVR_D2;
     bool hasSelect = false; // 是否连接
     int battery = 50;

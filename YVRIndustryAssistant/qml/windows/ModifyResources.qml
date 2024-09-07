@@ -18,7 +18,7 @@ Rectangle {
     property string poster: isVideo ? qsTr("请上传视频海报") : qsTr("请上传图片海报")
     property string  showNameText: "111"
     property string  fileDescText: "222"
-    property var selectItem: [false, false, false, false, false]
+    property var selectIndex: 0
     property int type: 0
     property int index: 0
     property int pos: 0
@@ -81,11 +81,9 @@ Rectangle {
                         model: yvr.resourcesListModelAdd.videoGroups
                         delegate: Rectangle
                         {
-                            id: titleItem
-                            property bool select: selectItem[index]
                             width: 56
                             height: 26
-                            color:titleItem.select ? "#3476FB" :"#555763"
+                            color:selectIndex === index? "#3476FB" :"#555763"
                             radius: 4
                             Text {
                                 anchors.centerIn: parent
@@ -102,8 +100,8 @@ Rectangle {
                                 anchors.fill: parent
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: {
-                                    titleItem.select = !titleItem.select
-                                    selectItem[index] = titleItem.select
+                                    //selectIndex = index
+                                    mainWin.showToast(qsTr("编辑不支持分组修改"))
                                 }
                             }
                         }
@@ -130,17 +128,17 @@ Rectangle {
                 id: control
                 Layout.preferredWidth: 560
                 Layout.preferredHeight: 46
+
+                model:isVideo ?  ["2D", "180°[2D]", "360°[2D]", "3D", "180°[3D]","360°[3D]"]
+                              : ["2D", qsTr("立方体投影"),qsTr("360°全景"),qsTr("180°全景")]
+
                 currentIndex: {
                    if(type > 5)
                    {
                         return type - 3;
                    }
-
                    return type;
                 }
-
-                model:isVideo ?  ["2D", "180°[2D]", "360°[2D]", "3D", "180°[3D]","360°[3D]"]
-                              : ["2D", qsTr("立方体投影"),qsTr("360°全景"),qsTr("180°全景")]
 
                 delegate: ItemDelegate {
                     width: 560
@@ -386,23 +384,19 @@ Rectangle {
 
                     var type = control.currentIndex
 
-                    if(type > 2)
+                    if(isVideo)
                     {
-                        if(select3D.currentIndex === 0)
+                        if(type > 3 && select3D.currentIndex === 0)
                         {
                             type = type + 7
                         }else
                         {
                             type = type + 4
                         }
-                    }else
-                    {
-                        type = type + (isVideo ? 4 : 0)
                     }
 
-
                     yvr.resourcesListModelAdd.modify(index, showName.inputText, fileDesc.inputText,
-                                        file, poster, type, selectItem)
+                                        file, poster, type, selectIndex)
                     mainWin.hideSubWin()
                     subWindow.source = ""
                 }

@@ -106,7 +106,7 @@ def BuildGui():
     proj = config.get('gui_path') + '/YVRIndustryAssistant.pro'
 
     print('开始 qml 编译...')
-    out_exe = config.get('output_dir') + '/YVRIndustryAssistant.exe'
+    out_exe = config.get('output_dir') + '/PFDMIndustryAssistant.exe'
     if os.path.exists(out_exe):
         os.remove(out_exe)
 
@@ -115,7 +115,7 @@ def BuildGui():
     print('项目配置生成完成，开始编译...')
     os.system(config.get('jom_bin') + ' /f ' + config.get('gui_path')+'\\Makefile.Release')
     if not os.path.exists(out_exe):
-        print('YVR_Helper 编译失败！')
+        print('PFDMIndustryAssistant 编译失败！')
         exit(1)
     os.system(config.get('dep_bin') + ' ' + out_exe + ' -qmldir ' + config.get('qml_bin'))
 
@@ -143,7 +143,7 @@ def ComposeNSISCmdline(nsi_file, version):
     print('packing...')
     return config.get('nsis_bin')+'/makensis ' + \
         '/DPRODUCT_VERSION="' + version + '" ' +\
-        '/DPRODUCT_OUT_FILE_NAME="YVRHelper_setup_' + version + '.exe" ' +\
+        '/DPRODUCT_OUT_FILE_NAME="PFDMIndustryAssistant_setup_' + version + '.exe" ' +\
         nsi_file
 
 

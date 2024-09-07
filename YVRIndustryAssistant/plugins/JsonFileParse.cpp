@@ -41,16 +41,14 @@ void JsonFileParse::loadFile()
             QJsonObject obj = doc.object();
             file.close();
 
-            m_fileList = obj["list"].toArray();
+            m_localFileList = obj["list"].toArray();
             m_videoGroups = obj["groups"].toArray();
             obj.remove("list");
             obj.remove("groups");
 
             m_baseInfo = std::move(obj);
         }
-
     }
-
 
     file.setFileName(QString(m_appLocalDataLocation + "/configForDevices.dat"));
     if(file.exists())
@@ -75,21 +73,28 @@ void JsonFileParse::loadFile()
     }
 }
 
-void JsonFileParse::updateFile(QJsonArray fileList)
+void JsonFileParse::deploymentLocal(QJsonArray fileList)
 {
-    m_fileList = std::move(fileList);
+    m_localFileList = std::move(fileList);
 
-//    QJsonDocument doc;
-//    QJsonObject remote = m_baseInfo;
-//    remote["list"] = m_fileList;
-//    remote["groups"] = m_videoGroups;
-//    QFile remoteFile(QString(m_appLocalDataLocation + "/config.dat"));
+    QJsonDocument doc;
 
-//    doc.setObject(remote);
-//    remoteFile.open(QIODevice::WriteOnly | QIODevice::Truncate);
-//    remoteFile.write(doc.toJson());
-//    remoteFile.close();
+    QJsonObject local = m_baseInfo;
+    local["list"] = m_localFileList;
+    local["groups"] = m_videoGroups;
+
+    QFile file(QString(m_appLocalDataLocation + "/config.dat"));
+
+    doc.setObject(local);
+    if(file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+
+        file.write(doc.toJson());
+        file.close();
+    }
 }
+
+
 
 void JsonFileParse::updateDevice(QJsonArray& vrList, QStringList groups)
 {
@@ -167,7 +172,7 @@ bool JsonFileParse::getPlayControl()
     return m_baseInfo["autoControl"].toBool();
 }
 
-void JsonFileParse::deployment(QJsonArray fileList, QString path)
+void JsonFileParse::deployment(QJsonArray fileList, QString path, QString logo)
 {
     QString uid = QUuid::createUuid().toString();
     m_baseInfo["UUID"] = uid;
@@ -177,7 +182,7 @@ void JsonFileParse::deployment(QJsonArray fileList, QString path)
     QJsonObject remote;
     remote["UUID"] = uid;
     remote["pcVersion"] = PFDMVersion;
-    remote["logo"] = m_baseInfo["logo"].toString();
+    remote["logo"] = logo;
     remote["port"] = m_baseInfo["port"];
     remote["groups"] = m_videoGroups;
     remote["list"] = std::move(fileList);
@@ -190,25 +195,6 @@ void JsonFileParse::deployment(QJsonArray fileList, QString path)
     remoteFile.close();
 }
 
-void JsonFileParse::updateLocal()
-{
-    QJsonDocument doc;
-
-    QJsonObject local = m_baseInfo;
-    local["list"] = m_fileList;
-    local["groups"] = m_videoGroups;
-
-    QFile file(QString(m_appLocalDataLocation + "/config.dat"));
-
-    doc.setObject(local);
-    if(file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-    {
-
-        file.write(doc.toJson());
-        file.close();
-    }
-}
-
 void JsonFileParse::updateGroups(QStringList groups, QString name, QString content)
 {
     m_videoGroups = QJsonArray::fromStringList(groups);
@@ -216,10 +202,14 @@ void JsonFileParse::updateGroups(QStringList groups, QString name, QString conte
     m_baseInfo["planContent"] = content;
 }
 
-QJsonArray &JsonFileParse::fileList()
+QJsonArray JsonFileParse::localFileList(int index)
 {
-    return m_fileList;
+    if(index + 1 > m_localFileList.size())
+        return QJsonArray();
+
+    return m_localFileList[index].toArray();
 }
+
 
 QJsonArray &JsonFileParse::vrList()
 {

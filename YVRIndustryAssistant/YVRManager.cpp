@@ -29,9 +29,7 @@ YVRManager::YVRManager(QObject *parent) : QObject(parent)
     m_UDPBroadCast->startUDPBroadCast(YVRWebServerPort - 1);
     m_monitor->startWebsocket(YVRWebServerPort);
 
-    m_resourcesListAdd = new ResourceAddListModel(this);
-    // m_resourcesListAdd->load(JsonFileParse::ins()->fileList());
-    auto task = [=](){ m_resourcesListAdd->load(JsonFileParse::ins()->fileList());};
+    auto task = [=](){ Settings::Instance().load();};
 
     std::thread t(task);
     t.detach();
@@ -41,12 +39,11 @@ YVRManager::YVRManager(QObject *parent) : QObject(parent)
 
 YVRManager::~YVRManager()
 {
-    delete m_UDPBroadCast;
+   delete m_UDPBroadCast;
+   m_monitor->save();
 
    if(m_resourcesListAdd != nullptr)
-       m_resourcesListAdd->save(true);
-
-   m_monitor->save();
+       m_resourcesListAdd->save();
 }
 
 void YVRManager::mainWinsizeChange()
@@ -81,17 +78,17 @@ void YVRManager::deploymentPlan()
 
 
     QJsonArray fileArray;
-    m_resourcesListAdd->fileArray(fileArray, m_fileSavePath + "/config");
     JsonFileParse::ins()->setPort(YVRWebServerPort);
-    JsonFileParse::ins()->deployment(fileArray, m_fileSavePath + "/config");
+    Settings::Instance().deployment(m_fileSavePath + "/config");
 
     gotoFolder(m_fileSavePath);
 
     auto task = [=](){
         m_monitor->save();
-        m_resourcesListAdd->save(true);
+        m_resourcesListAdd->save();
+
         if( m_resourcesList != nullptr)
-            m_resourcesList->load(JsonFileParse::ins()->fileList());
+            m_resourcesList->load();
     };
 
     std::thread t(task);
@@ -132,7 +129,12 @@ void YVRManager::rebootN(QString sn)
 
 void YVRManager::rebootP(QString sn)
 {
-     m_monitor->rebootP(sn);
+    m_monitor->rebootP(sn);
+}
+
+void YVRManager::modiftyDevice(QString sn, QString id)
+{
+    m_monitor->modiftyDevice(sn, id.toInt());
 }
 
 void YVRManager::addDiscoverDeice(bool selectAll)
@@ -162,13 +164,14 @@ void YVRManager::play(int index, bool loopPlay,  bool selectAll)
 void YVRManager::clearPlan()
 {
     m_resourcesListAdd->clear();
+    Settings::Instance().clear();
 
-    if(m_resourcesList)
+    if(m_resourcesList != nullptr)
     {
-        m_resourcesList->clear();
+        m_resourcesList->load();
     }
 
-    JsonFileParse::ins()->updateFile(QJsonArray());
+    m_resourcesListAdd->showGroup(0);
 }
 
 void YVRManager::showDeviceExampleExcel()
@@ -220,7 +223,7 @@ QVariant YVRManager::resourcesList()
     if(m_resourcesList == nullptr)
     {
         m_resourcesList = new ResourceListModel(this);
-        m_resourcesList->load(JsonFileParse::ins()->fileList());
+        m_resourcesList->load();
     }
 
     return QVariant::fromValue(m_resourcesList);
@@ -228,6 +231,12 @@ QVariant YVRManager::resourcesList()
 
 QVariant YVRManager::resourcesListAdd()
 {
+    if(m_resourcesListAdd == nullptr)
+    {
+        m_resourcesListAdd = new ResourceAddListModel(this);
+        m_resourcesListAdd->showGroup(0);
+    }
+
     return QVariant::fromValue(m_resourcesListAdd);
 }
 
@@ -236,7 +245,7 @@ QVariant YVRManager::resourcesListAuto()
     if(m_resourcesListAuto == nullptr)
     {
         m_resourcesListAuto = new ResourceAddListModel(this);
-        m_resourcesListAuto->load(JsonFileParse::ins()->fileList());
+        m_resourcesListAuto->showGroup(0);
     }
 
     return QVariant::fromValue(m_resourcesListAuto);

@@ -68,7 +68,7 @@ Rectangle{
 
         Text {
             Layout.leftMargin: 34
-            text: selectAll.visible ? ("选择设备("+ vrList.rowCount() + ")") : vrList.selectCount
+            text: selectAll.visible ? ("选择设备("+ (vrList.rowCount() - vrList.getDisable() )+ ")") : vrList.selectCount
             font.pixelSize: 14
             font.bold: true
             color: "#DBDBDB"
@@ -169,8 +169,8 @@ Rectangle{
 
                         Image{
                             anchors.fill: parent
-                            visible:  ( selectAll.visible || vrSelected) && vrCanSelected
-                            source: "qrc:/res/image/yvr_select.png"
+                            visible:  (selectAll.visible || vrSelected) || !vrCanSelected
+                            source: vrCanSelected ? "qrc:/res/image/yvr_select.png" : "qrc:/res/image/yvr_disable.png"
                         }
 
                         MouseArea{

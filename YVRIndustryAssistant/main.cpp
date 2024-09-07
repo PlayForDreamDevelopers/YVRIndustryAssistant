@@ -67,6 +67,7 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
 int main(int argc, char *argv[])
 {
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
 #ifdef QT_NO_DEBUG
@@ -91,7 +92,8 @@ int main(int argc, char *argv[])
     QString strKey = "PFDMIndustryAssistant";
     LPCWSTR wstrKey = strKey.toStdWString().c_str();
     HANDLE hMetex = CreateMutex(NULL,FALSE,wstrKey);
-    if(GetLastError() == ERROR_ALREADY_EXISTS){
+    if(GetLastError() == ERROR_ALREADY_EXISTS)
+    {
     //如果互斥体存在，说明程序已经有实例在运行了,释放资源然后关闭本实例
         if(hMetex){
         CloseHandle(hMetex);
@@ -119,7 +121,10 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QGuiApplication::exit(-1);
     }, Qt::QueuedConnection);
+
     engine.load(url);
+
+
 
     return app.exec();
 }

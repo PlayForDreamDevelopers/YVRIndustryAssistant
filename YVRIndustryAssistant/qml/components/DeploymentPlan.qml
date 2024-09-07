@@ -8,45 +8,47 @@ Rectangle {
     id: root
     color: "#22242C"
     property bool hasfinish: false
+    RowLayout
+    {
+        x: 30
+        y: 26
+        Image {
+            Layout.leftMargin: 30
+            Layout.preferredHeight: 28
+            Layout.preferredWidth: 28
+            source: "qrc:/res/image/yvr_back.png"
+
+            MouseArea{
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: root.parent.source = ""
+            }
+        }
+
+        Text {
+            Layout.alignment: Qt.AlignHCenter
+            text: qsTr("部署方案-离线部署")
+            font.pixelSize: 24
+            color: "#FFFFFF"
+        }
+
+    }
+
     ColumnLayout{
         spacing: 0
         width: parent.width
-
-        RowLayout
-        {
-            Layout.leftMargin: 30
-            Layout.topMargin: 26
-            Image {
-                Layout.leftMargin: 30
-                Layout.preferredHeight: 28
-                Layout.preferredWidth: 28
-                source: "qrc:/res/image/yvr_back.png"
-
-                MouseArea{
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: root.parent.source = ""
-                }
-            }
-
-            Text {
-                Layout.alignment: Qt.AlignHCenter
-                text: qsTr("部署方案-离线部署")
-                font.pixelSize: 24
-                color: "#FFFFFF"
-            }
-
-        }
+        anchors.centerIn: parent
 
         Rectangle{
             width: 840
-            height: 404
+            height: textContent.height + 28
             radius: 16
             color: "#2E313B"
             Layout.topMargin: 58
             Layout.alignment: Qt.AlignHCenter
 
             ColumnLayout{
+                id: textContent
                 spacing: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 24
@@ -56,6 +58,7 @@ Rectangle {
                     font.pixelSize: 18
                     color: "#FFFFFF"
                 }
+
                 Text {
                     Layout.topMargin: 8
                     text: qsTr("适用于小批量设备部署")
@@ -71,11 +74,13 @@ Rectangle {
                                 "4、重启设备；\n"+
                                 "5、对其他需要的设备逐一部署；")
                     font.pixelSize: 14
+                    lineHeight: 1.2
                     color: "#B2FFFFFF"
                 }
 
+
                 Text {
-                    Layout.topMargin: 12
+                    Layout.topMargin: 10
                     text: qsTr("方式二：通过SD卡/U盘部署")
                     font.pixelSize: 18
                     color: "#FFFFFF"
@@ -86,6 +91,8 @@ Rectangle {
                     font.pixelSize: 14
                     color: "#FFFFFF"
                 }
+
+
                 Text {
                     Layout.topMargin: 8
                     text: qsTr("1、在VR设备内打开“行业助手”，详见说明书；\n"+
@@ -96,10 +103,12 @@ Rectangle {
                                 "6、对其他需要的设备逐一部署；")
                     font.pixelSize: 14
                     color: "#B2FFFFFF"
+                    lineHeight: 1.2
                 }
 
+
                 Text {
-                    Layout.topMargin: 12
+                    Layout.topMargin: 10
                     text: qsTr("离线部署：将目前现有的配置内容，统一下载至本地路径，然后将下载内容拷贝至VR设备目录下。")
                     font.pixelSize: 14
                     color: "#F69422"

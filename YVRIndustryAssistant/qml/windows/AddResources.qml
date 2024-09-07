@@ -17,7 +17,7 @@ Rectangle {
     property bool isVideoOnly: false
     property string file: qsTr("请上传文件")
     property string poster: qsTr("请上传封面")
-    property var selectItem: [false, false, false, false, false]
+    property var selectIndex: 0
 
     Rectangle{
         anchors.fill: parent
@@ -143,14 +143,11 @@ Rectangle {
                         model: yvr.resourcesListModelAdd.videoGroups
                         delegate: Rectangle
                         {
-                            id: titleItem
-                            property bool select: selectItem[index]
                             width: 56
                             height: 26
-                            color:titleItem.select ? "#3476FB" :"#555763"
+                            color: selectIndex == index ? "#3476FB" :"#555763"
                             radius: 4
                             Text {
-                                id: title
                                 anchors.centerIn: parent
                                 width: 46
                                 color: "#C4C4C4"
@@ -165,8 +162,7 @@ Rectangle {
                                 anchors.fill: parent
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: {
-                                    titleItem.select = !titleItem.select
-                                    selectItem[index] = titleItem.select
+                                    selectIndex = index
                                 }
                             }
                         }
@@ -317,22 +313,20 @@ Rectangle {
 
                     var type = control.currentIndex
 
-                    if(type > 2)
+                    if(isVideo)
                     {
-                        if(select3D.currentIndex === 0)
+                        if(type > 3 && select3D.currentIndex === 0)
                         {
                             type = type + 7
                         }else
                         {
                             type = type + 4
                         }
-                    }else
-                    {
-                        type = type + (isVideo ? 4 : 0)
                     }
 
+
                     yvr.resourcesListModelAdd.add(showName.inputText, fileDesc.inputText,
-                                     file, poster, type, selectItem)
+                                     file, poster, type, selectIndex)
 
                     file = qsTr("请上传文件")
                     poster = qsTr("请上传封面")
