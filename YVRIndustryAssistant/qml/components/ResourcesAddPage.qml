@@ -269,14 +269,18 @@ Image {
                     id: visualModel
                     model: yvr.resourcesListModelAdd
 
-                    delegate: DropArea {
+                    delegate:  DropArea {
                         id: delegateRoot
                         width: gridView.cellWidth
                         height: gridView.cellHeight
 
+
                         onEntered: {
-                            visualModel.items.move(drag.source.visualIndex, icon.visualIndex)
+                            if(!hasItem || drag.source.visualIndex === gridView.count - 1 || drag.source.visualIndex === icon.visualIndex)
+                                return
+
                             yvr.resourcesListModelAdd.move(drag.source.visualIndex, icon.visualIndex)
+                            visualModel.items.move(drag.source.visualIndex, icon.visualIndex)
                         }
 
                         property int visualIndex: DelegateModel.itemsIndex

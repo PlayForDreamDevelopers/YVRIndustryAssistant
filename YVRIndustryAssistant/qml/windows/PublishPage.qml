@@ -12,6 +12,7 @@ Rectangle{
     radius: 16
     property string showTitle: qsTr("创建播控")
     property int videoIndex : -1
+    property bool isVideo: true
     property var vrList
     signal ensure()
     RowLayout{
@@ -19,7 +20,7 @@ Rectangle{
         height: 72
         id: titleBar
         Image{
-            Layout.leftMargin: 34
+            Layout.leftMargin: 32
             Layout.preferredHeight:18
             Layout.preferredWidth:18
             source: "qrc:/res/image/yvr_close.png"
@@ -64,6 +65,7 @@ Rectangle{
     ColumnLayout {
         anchors.top: parent.top
         anchors.topMargin: 90
+        height: 346
         spacing: 8
 
         Text {
@@ -76,8 +78,8 @@ Rectangle{
 
         Rectangle{
             Layout.leftMargin: 34
-            width: 482
-            height: 222
+            width: 456
+            Layout.fillHeight: true
             color: "#45454B"
             radius: 8
 
@@ -151,10 +153,10 @@ Rectangle{
                 anchors.top: parent.top
                 anchors.topMargin: 59
                 width: parent.width
-                height: 160
+                clip: true
+                height: parent.height - 60
                 bottomMargin: 16
                 model: vrList
-                clip: true
                 delegate: RowLayout{
                     height: 54
                     spacing: 0
@@ -213,6 +215,7 @@ Rectangle{
 
 
         Text {
+            visible: isVideo
             Layout.leftMargin: 34
             text: qsTr("播放策略")
             font.pixelSize: 12
@@ -225,6 +228,7 @@ Rectangle{
             height: 44
             color: "#45454B"
             radius: 8
+            visible: isVideo
             Layout.leftMargin: 34
 
 
@@ -242,6 +246,7 @@ Rectangle{
                 Image{
                     id: loopPlay
                     anchors.fill: parent
+                    visible: isVideo
                     source: "qrc:/res/image/yvr_select.png"
                 }
 

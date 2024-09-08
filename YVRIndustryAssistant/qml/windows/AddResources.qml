@@ -188,8 +188,8 @@ Rectangle {
                 id: control
                 currentIndex: 0
                 curText: qsTr("2D")
-                controlModel: isVideo ? ["2D", "180°[2D]", "360°[2D]", "3D", "180°[3D]","360°[3D]"]
-                               : ["2D", qsTr("立方体投影"),qsTr("360°全景"),qsTr("180°全景")]
+                controlModel: isVideo ? ["2D", "180_2D", "360_2D", "3D", "180_3D","360_3D"]
+                               :  ["2D", "CubeMap","360","180"]
 
                 onSelectItem: root.update()
             }
@@ -315,7 +315,7 @@ Rectangle {
 
                     if(isVideo)
                     {
-                        if(type > 3 && select3D.currentIndex === 0)
+                        if(type > 2 && select3D.currentIndex === 0)
                         {
                             type = type + 7
                         }else

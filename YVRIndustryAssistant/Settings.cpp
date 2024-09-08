@@ -84,6 +84,8 @@ void Settings::load()
         FileInfo info;
         info.type = YVRResourceType::UndeifneFile;
         info.realPoster = "qrc:/res/image/yvr_import_resource.png";
+        info.groups.clear();
+        info.groups.append(list[i].toString());
         _data.append(info);
         m_fileInfos[i] = std::move(_data);
     }
@@ -189,7 +191,6 @@ void Settings::removeGroup(int index)
 {
     if(m_fileInfos.contains(index))
     {
-        m_fileInfos[0].append(m_fileInfos[index]);
         m_fileInfos.remove(index);
     }
 }

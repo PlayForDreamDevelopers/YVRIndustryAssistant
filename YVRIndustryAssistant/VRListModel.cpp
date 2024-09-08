@@ -307,18 +307,19 @@ QVariant VRListModel::getPlayVRList(int index)
         YVRPlayDevice device;
         device.id = item.id;
         device.sn = item.sn;
-        device.canSelect = item.playStatus != 0 || item.video == index;
+        device.canSelect = (item.playStatus != 0 || item.video == index) && !item.offline;
 
         if(item.offline)
         {
             device.status = "离线";
         }else {
-            if(!item.controled)
-                device.status = "自由";
+
+            if(item.playStatus == 0)
+                device.status = "播放中";
             else
             {
-                if(item.playStatus == 0)
-                    device.status = "播放中";
+                if(!item.controled)
+                    device.status = "自由";
                 else
                     device.status = "待机";
             }

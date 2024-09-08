@@ -8,6 +8,7 @@ import "../control"
 
 Rectangle {
 
+    id: root
     width: 680
     height: mainspace.height + 102
     color: "transparent"
@@ -22,6 +23,8 @@ Rectangle {
     property int type: 0
     property int index: 0
     property int pos: 0
+    property var  videoType: ["2D", "180_2D", "360_2D", "3D", "180_3D","360_3D"]
+    property var  imageType: ["2D", "CubeMap","360","180"]
 
     Rectangle{
         anchors.fill: parent
@@ -124,14 +127,8 @@ Rectangle {
                 tipText: qsTr("请输入资源介绍")
             }
 
-            ComboBox {
+            YVRCombox{
                 id: control
-                Layout.preferredWidth: 560
-                Layout.preferredHeight: 46
-
-                model:isVideo ?  ["2D", "180°[2D]", "360°[2D]", "3D", "180°[3D]","360°[3D]"]
-                              : ["2D", qsTr("立方体投影"),qsTr("360°全景"),qsTr("180°全景")]
-
                 currentIndex: {
                    if(type > 5)
                    {
@@ -140,148 +137,21 @@ Rectangle {
                    return type;
                 }
 
-                delegate: ItemDelegate {
-                    width: 560
-                    height: 30
-                    background: Rectangle{
-                        color: parent.highlighted ?  "#40414F" : "#33343D"
-                        radius: 8
-                        anchors.fill: parent
-                    }
+                curText:  isVideo ? videoType[currentIndex] : imageType[currentIndex]
 
-                    contentItem: Text {
-                        text: modelData
-                        color: parent.highlighted ? "#FFFFFF" : "#99FFFFFF"
-                        font.pixelSize: 16
-                        elide: Text.ElideRight
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    highlighted: control.highlightedIndex === index
-                }
+                controlModel: isVideo ? videoType
+                               :  imageType
 
-                indicator:Image {
-                        anchors.right: parent.right
-                        anchors.rightMargin: 16
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: 24
-                        height: 24
-                        source: "qrc:/res/image/yvr_arrow_down.png"
-                    }
-
-                contentItem: Text {
-                    leftPadding: 16
-                    rightPadding: control.indicator.width + control.spacing
-
-                    text: control.displayText
-                    font: control.font
-                    color: "#FFFFFF"
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
-
-                background: Rectangle {
-                    implicitWidth: 560
-                    implicitHeight: 54
-                    color: "#33343D"
-                    radius: 8
-                }
-
-                popup: Popup {
-                    y: control.height + 5
-                    width: control.width
-                    implicitHeight: contentItem.implicitHeight
-                    padding: 1
-
-                    contentItem: ListView {
-                        clip: true
-                        implicitHeight: contentHeight + 2
-                        model: control.popup.visible ? control.delegateModel : null
-                        currentIndex: control.highlightedIndex
-
-                        ScrollIndicator.vertical: ScrollIndicator { }
-                    }
-
-                    background: Rectangle {
-                        color: "#33343D"
-                        radius: 8
-                    }
-                }
+                onSelectItem: root.update()
             }
 
-            ComboBox {
+
+            YVRCombox{
                 id: select3D
                 visible: isVideo && control.currentIndex > 2
-                Layout.preferredWidth: 560
-                Layout.preferredHeight: 46
                 currentIndex: type > 5 ? 0 : 1
-                model: [qsTr("3D左右"), qsTr("3D上下")]
-
-                delegate: ItemDelegate {
-                    width: 560
-                    height: 30
-                    background: Rectangle{
-                        color: parent.highlighted ?  "#40414F" : "#33343D"
-                        radius: 8
-                        anchors.fill: parent
-                    }
-
-                    contentItem: Text {
-                        text: modelData
-                        color: parent.highlighted ? "#FFFFFF" : "#99FFFFFF"
-                        font.pixelSize: 16
-                        elide: Text.ElideRight
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    highlighted: select3D.highlightedIndex === index
-                }
-
-                indicator:Image {
-                        anchors.right: parent.right
-                        anchors.rightMargin: 16
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: 24
-                        height: 24
-                        source: "qrc:/res/image/yvr_arrow_down.png"
-                    }
-
-                contentItem: Text {
-                    leftPadding: 16
-                    rightPadding: select3D.indicator.width + select3D.spacing
-
-                    text: select3D.displayText
-                    font: select3D.font
-                    color: "#FFFFFF"
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
-
-                background: Rectangle {
-                    implicitWidth: 560
-                    implicitHeight: 54
-                    color: "#33343D"
-                    radius: 8
-                }
-
-                popup: Popup {
-                    y: select3D.height + 5
-                    width: select3D.width
-                    implicitHeight: contentItem.implicitHeight
-                    padding: 1
-
-                    contentItem: ListView {
-                        clip: true
-                        implicitHeight: contentHeight + 2
-                        model: select3D.popup.visible ? select3D.delegateModel : null
-                        currentIndex: select3D.highlightedIndex
-
-                        ScrollIndicator.vertical: ScrollIndicator { }
-                    }
-
-                    background: Rectangle {
-                        color: "#33343D"
-                        radius: 8
-                    }
-                }
+                curText:  type > 5 ?   qsTr("3D左右") : qsTr("3D上下")
+                controlModel: [qsTr("3D左右"), qsTr("3D上下")]
             }
 
             Rectangle{
@@ -386,7 +256,7 @@ Rectangle {
 
                     if(isVideo)
                     {
-                        if(type > 3 && select3D.currentIndex === 0)
+                        if(type > 2 && select3D.currentIndex === 0)
                         {
                             type = type + 7
                         }else

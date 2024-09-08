@@ -94,7 +94,7 @@ Rectangle {
     FileDialog{
         id: filedialog
         selectExisting: true
-        title: "YVR"
+        title: "PFDM"
         //folder: yvr.defaultPath()
         selectFolder: false
         selectMultiple: false

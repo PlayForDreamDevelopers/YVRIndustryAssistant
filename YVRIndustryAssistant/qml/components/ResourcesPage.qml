@@ -253,6 +253,7 @@ Item {
                                     subWindow.source = "qrc:/qml/windows/PublishPage.qml"
                                     subWindow.item.showTitle = qsTr("创建播控")
                                     subWindow.item.videoIndex = fileIndex
+                                    subWindow.item.isVideo = typeImageVideo
                                     subWindow.item.vrList = list
                                     mainWin.showSubWin()
 

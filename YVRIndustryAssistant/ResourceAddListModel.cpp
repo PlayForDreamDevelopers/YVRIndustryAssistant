@@ -161,15 +161,8 @@ void ResourceAddListModel::move(int from, int to)
         return;
 
     m_data->move(from, to);
-    QList<FileInfo>& tmp = *m_data;
-    for(auto &item : tmp)
-    {
-        qInfo() << item.showName;
-    }
-
-    qInfo("from %d: to%d", from, to);
 //    auto start_index = createIndex(from, 0);
-//    auto end_index = createIndex(to, 0);
+//    auto end_index = createIndex(to, 10);
 //    dataChanged(start_index, end_index);
 }
 
@@ -231,6 +224,13 @@ void ResourceAddListModel::showGroup(int index)
     beginResetModel();
     m_data = &Settings::Instance().getFileInfos(index);
     endResetModel();
+}
+
+void ResourceAddListModel::update()
+{
+    auto start_index = createIndex(0, 0);
+    auto end_index = createIndex(m_data->size() -1, 10);
+    dataChanged(start_index, end_index);
 }
 
 int ResourceAddListModel::rowCount(const QModelIndex &parent) const

@@ -27,6 +27,7 @@ public:
     Q_INVOKABLE void modifyGroup(int index, QString group);
     Q_INVOKABLE int addOrDelGroup(int index, bool add = false);
     Q_INVOKABLE void showGroup(int index);
+    Q_INVOKABLE void update();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
