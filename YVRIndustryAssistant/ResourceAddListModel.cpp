@@ -210,6 +210,7 @@ int ResourceAddListModel::addOrDelGroup(int index, bool add)
     }else
     {
         m_videoGroups.removeAt(index);
+        Settings::Instance().removeGroup(index);
     }
 
     videoGroupsChange();

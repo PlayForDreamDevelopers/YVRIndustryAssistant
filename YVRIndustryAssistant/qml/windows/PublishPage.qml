@@ -27,7 +27,10 @@ Rectangle{
             MouseArea{
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
-                onClicked: mainWin.hideSubWin()
+                onClicked: {
+                    mainWin.hideSubWin()
+                    subWindow.source = ""
+                }
             }
         }
 

@@ -327,11 +327,12 @@ QVariant VRListModel::getPlayVRList(int index)
 
         device.hasSelect = item.video == index;
 
-        if(device.hasSelect)
-            count++;
+
 
         if(!device.canSelect)
             disableCount++;
+        else if(device.hasSelect)
+            count++;
 
         data.append(device);
     }

@@ -180,6 +180,9 @@ QList<FileInfo> &Settings::getFileInfos(int index)
         FileInfo info;
         info.type = YVRResourceType::UndeifneFile;
         info.realPoster = "qrc:/res/image/yvr_import_resource.png";
+        info.groups.clear();
+        auto list = JsonFileParse::ins()->videoGroups();
+        info.groups.append(list[index].toString());
         res.append(info);
         return res;
     }
