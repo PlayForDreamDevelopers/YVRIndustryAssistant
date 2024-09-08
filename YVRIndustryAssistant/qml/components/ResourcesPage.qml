@@ -5,7 +5,7 @@ import YVRManager 1.0
 import "./../control"
 
 Item {
-
+    enabled: !subWindow.visible
     ColumnLayout{
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: 0

@@ -49,9 +49,6 @@ QHash<int, QByteArray> VRDiscoverListModel::roleNames() const
 
 void VRDiscoverListModel::deviceChange(QString sn, bool offline, int index)
 {
-    if(m_data.size() > 10)
-        return;
-
     if(offline)
     {
         if(!m_deviceSn.contains(sn))

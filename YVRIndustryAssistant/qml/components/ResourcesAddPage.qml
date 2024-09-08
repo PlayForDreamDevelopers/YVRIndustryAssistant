@@ -154,6 +154,7 @@ Image {
                 }
 
                 Repeater{
+                    id: groupTab
                     model: yvr.resourcesListModelAdd.videoGroups
 
                     delegate: Rectangle{
@@ -250,6 +251,7 @@ Image {
 
             GridView{
                 id: gridView
+                enabled: !subWindow.visible
                 Layout.preferredWidth: 645
                 height: 452
                 leftMargin: 18
@@ -415,7 +417,17 @@ Image {
                                 mainWin.showSubWin()
                             }else
                             {
-                                yvr.resourcesListModelAdd.addOrDelGroup(menu.pos, false);
+                                if(groupTab.count === (menu.pos + 1))
+                                {
+                                    yvr.resourcesListModelAdd.addOrDelGroup(menu.pos, false);
+                                    if(menu.pos === curIndex)
+                                    {
+                                        curIndex = 0;
+                                        yvr.resourcesListModelAdd.showGroup(0)
+                                    }
+                                }
+                                else
+                                   mainWin.showToast(qsTr("只能从最后一个开始删除！"))
                             }
                         }else
                         {
