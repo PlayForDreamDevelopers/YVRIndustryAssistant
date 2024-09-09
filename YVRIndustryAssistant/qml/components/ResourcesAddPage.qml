@@ -336,7 +336,7 @@ Image {
                                     if(moveItems)
                                     {
                                         moveItems = false
-                                        mainWin.showToast(qsTr("列表已修改，数据保存完毕，即可编辑删除"))
+                                        mainWin.showToast(qsTr("排序已保存"))
                                         yvr.resourcesListModelAdd.showGroup(curIndex)
                                         return
                                     }

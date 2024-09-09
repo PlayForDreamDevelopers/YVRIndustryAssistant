@@ -217,6 +217,13 @@ bool YVRManager::firstAddDevice() const
     return false;
 }
 
+bool YVRManager::hasPulished()
+{
+    if(m_resourcesList == nullptr)
+        return false;
+    return m_resourcesList->getHasPublish();
+}
+
 QVariant YVRManager::resourcesList()
 {
 

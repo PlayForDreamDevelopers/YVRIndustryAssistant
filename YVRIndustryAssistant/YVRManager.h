@@ -67,6 +67,7 @@ public:
 
     Q_INVOKABLE bool firstPlayControl() const;
     Q_INVOKABLE bool firstAddDevice() const;
+    Q_INVOKABLE bool hasPulished();
 
     QVariant resourcesList();
     QVariant resourcesListAdd();

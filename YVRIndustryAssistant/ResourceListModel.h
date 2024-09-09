@@ -21,6 +21,8 @@ public:
     void publish(int id);
     void stoppublish(int id);
 
+    bool getHasPublish();
+
 protected:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

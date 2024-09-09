@@ -161,6 +161,12 @@ void ResourceAddListModel::move(int from, int to)
         return;
 
     m_data->move(from, to);
+
+
+//    for (int i = 0; i < m_data->size(); ++i) {
+//        qInfo() << (*m_data)[i].showName;
+//    }
+
 //    auto start_index = createIndex(from, 0);
 //    auto end_index = createIndex(to, 10);
 //    dataChanged(start_index, end_index);

@@ -71,6 +71,16 @@ void ResourceListModel::stoppublish(int id)
     dataChanged(start_index, end_index);
 }
 
+bool ResourceListModel::getHasPublish()
+{
+    for (int i = 0; i < m_data.size(); ++i) {
+        if (!m_data[i].prePlayTime.isEmpty())
+            return true;
+    }
+
+    return false;
+}
+
 QVariant ResourceListModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
