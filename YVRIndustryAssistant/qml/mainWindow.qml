@@ -136,7 +136,23 @@ FramelessWindow {
                         showText: qsTr("方案管理")
                         selected: pageIndex === YVRManagerCLS.PlanManager
                         showIcon: "qrc:/res/image/yvr_plan_manager.png"
-                        onClickSignal: showPage(YVRManagerCLS.PlanManager)
+                        onClickSignal:
+
+                        {
+                            if(yvr.hasPulished())
+                            {
+                                subWindow.source = "qrc:/qml/windows/Reconfirm.qml"
+                                subWindow.item.showContent = qsTr("当前方案管理发布中，不可修改，请先取消发布后再前往修改。")
+                                subWindow.item.showTitle = qsTr("无法修改")
+                                subWindow.item.showImage = "qrc:/res/image/yvr_tips_cancel.png"
+                                mainWin.showSubWin()
+                                return
+                            }
+
+
+                            showPage(YVRManagerCLS.PlanManager)
+
+                        }
                     }
 
                     YVRImageButton{

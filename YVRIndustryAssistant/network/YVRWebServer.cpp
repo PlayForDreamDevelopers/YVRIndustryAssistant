@@ -109,6 +109,11 @@ void YVRWebServer::processMessage(const QString &message)
                 }
 
                 m_clients[sn]= pSender;
+                int id = Settings::Instance().getDeviceId(sn);
+                bool type = Settings::Instance().getControl();
+                QString res = "{\"data\":{\"id\":%1,\"controlled\":%2},\"type\":2004}}";
+                res = res.arg(id).arg(type? "true" : "false");
+                pSender->sendTextMessage(res);
             }
         }else
         {
@@ -118,7 +123,6 @@ void YVRWebServer::processMessage(const QString &message)
             bool type = Settings::Instance().getControl();
             QString res = "{\"data\":{\"id\":%1,\"controlled\":%2},\"type\":2004}}";
             res = res.arg(id).arg(type? "true" : "false");
-            qInfo()<< res;
             pSender->sendTextMessage(res);
         }
 

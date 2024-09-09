@@ -8,7 +8,7 @@ import "../control"
 
 Rectangle {
     width: 301
-    height: 369
+    height: 340
     visible: true
     color: "transparent"
     property string showTitle: qsTr("无法创建")
@@ -59,7 +59,6 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 0
             Image {
-                Layout.topMargin: 44
                 Layout.alignment: Qt.AlignHCenter
                 Layout.preferredHeight: 64
                 Layout.preferredWidth: 64
@@ -69,6 +68,8 @@ Rectangle {
             Text {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.topMargin: 12
+                Layout.maximumWidth: 240
+                wrapMode: Text.WrapAnywhere
                 text: showContent
                 font.pixelSize: 14
                 font.bold: true

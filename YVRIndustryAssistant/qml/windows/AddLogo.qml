@@ -24,7 +24,7 @@ Rectangle {
             Text {
                 Layout.leftMargin: 83
                 Layout.topMargin: 20
-                text: qsTr("更改 LOGO")
+                text: yvr.resourcesListModelAdd.logo === "" ? qsTr("添加 LOGO"): qsTr("更改 LOGO")
                 font.bold: true
                 color: "#FFFFFF"
                 font.pixelSize: 24

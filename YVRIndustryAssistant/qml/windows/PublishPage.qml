@@ -7,7 +7,7 @@ import "../control"
 
 Rectangle{
     width: 520
-    height: 468
+    height: 628
     color: "#33343D"
     radius: 16
     property string showTitle: qsTr("创建播控")
@@ -57,6 +57,13 @@ Rectangle{
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
                 onClicked:{
+                    var num = selectAll.visible ? vrList.rowCount() - vrList.getDisable() : vrList.selectCount
+                    if(num === 0)
+                    {
+                        showToast(qsTr("请先选择设备"))
+                        return
+                    }
+
                     yvr.play(videoIndex, loopPlay.visible, selectAll.visible)
                     mainWin.hideSubWin()
                     subWindow.source = ""
@@ -68,7 +75,7 @@ Rectangle{
     ColumnLayout {
         anchors.top: parent.top
         anchors.topMargin: 90
-        height: 346
+        height: 506
         spacing: 8
 
         Text {

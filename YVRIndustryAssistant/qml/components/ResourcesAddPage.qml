@@ -14,6 +14,7 @@ Image {
     source: "qrc:/res/image/yvr_playcontrol_back.png"
     property int curIndex: 0
     property int maxIndex: 1
+    property bool moveItems: false
 
     Rectangle{
         width: parent.width
@@ -209,6 +210,7 @@ Image {
                                 }else
                                 {
                                     curIndex = index
+                                    moveItems = false
                                     yvr.resourcesListModelAdd.showGroup(index)
                                 }
                             }
@@ -281,8 +283,12 @@ Image {
                             if(!hasItem || drag.source.visualIndex === gridView.count - 1 || drag.source.visualIndex === icon.visualIndex)
                                 return
 
-                            yvr.resourcesListModelAdd.move(drag.source.visualIndex, icon.visualIndex)
+                            //yvr.resourcesListModelAdd.move(drag.source.visualIndex, icon.visualIndex)
+                            visualModel.model.move(drag.source.visualIndex, icon.visualIndex)
                             visualModel.items.move(drag.source.visualIndex, icon.visualIndex)
+                            moveItems = true
+                            //yvr.resourcesListModelAdd.update()
+                            //visualModel.items.move(icon.visualIndex, drag.source.visualIndex)
                         }
 
                         property int visualIndex: DelegateModel.itemsIndex
@@ -327,6 +333,14 @@ Image {
                                     mainWin.showSubWin()
                                 }else
                                 {
+                                    if(moveItems)
+                                    {
+                                        moveItems = false
+                                        mainWin.showToast(qsTr("列表已修改，数据保存完毕，即可编辑删除"))
+                                        yvr.resourcesListModelAdd.showGroup(curIndex)
+                                        return
+                                    }
+
 
                                     subWindow.source = "qrc:/qml/windows/ModifyResources.qml"
                                     subWindow.item.isVideo = typeImageVideo
@@ -423,6 +437,7 @@ Image {
                                     if(menu.pos === curIndex)
                                     {
                                         curIndex = 0;
+                                        moveItems = false
                                         yvr.resourcesListModelAdd.showGroup(0)
                                     }
                                 }

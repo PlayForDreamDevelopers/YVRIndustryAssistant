@@ -190,7 +190,7 @@ Item {
 
 
                         Image {
-                            visible: !releaseBtn.visible
+                            visible: false // !releaseBtn.visible
                             Layout.preferredHeight: 44
                             Layout.preferredWidth: 44
                             source: "qrc:/res/image/yvr_create_plan.png"
@@ -248,7 +248,7 @@ Item {
 
                                 var list = yvr.vrListModel.getPlayVRList(fileIndex);
 
-                                if(list.rowCount() !== 0)
+                                if((list.rowCount() - list.getDisable()) !== 0)
                                 {
                                     subWindow.source = "qrc:/qml/windows/PublishPage.qml"
                                     subWindow.item.showTitle = qsTr("创建播控")
