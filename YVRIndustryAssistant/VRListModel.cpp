@@ -361,7 +361,7 @@ QStringList VRListModel::vrList() const
     return  m_dataMap.keys();
 }
 
-QStringList VRListModel::vrPlayingList(int index) const
+QStringList VRListModel::vrPlayingList(int index)
 {
     QStringList sns;
     for(auto &item : m_data)
@@ -369,6 +369,7 @@ QStringList VRListModel::vrPlayingList(int index) const
         if(item.video == index)
         {
            sns.append(item.sn);
+           item.video = -2;
         }
     }
 

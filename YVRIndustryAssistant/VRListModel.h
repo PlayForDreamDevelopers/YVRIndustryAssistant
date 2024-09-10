@@ -62,7 +62,7 @@ public:
 
     QStringList vrList() const;
 
-    QStringList vrPlayingList(int index) const;
+    QStringList vrPlayingList(int index);
 
     QStringList vrPlayList( bool selectAll) const;
 
