@@ -373,6 +373,11 @@ QStringList VRListModel::vrPlayingList(int index)
         }
     }
 
+    for(auto sn : sns)
+    {
+        m_dataMap[sn].video = -2;
+    }
+
     return  sns;
 }
 

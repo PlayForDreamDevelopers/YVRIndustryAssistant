@@ -12,6 +12,7 @@ Rectangle {
     {
         x: 30
         y: 26
+        spacing: 24
         Image {
             Layout.leftMargin: 30
             Layout.preferredHeight: 28

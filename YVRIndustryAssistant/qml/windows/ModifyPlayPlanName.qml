@@ -15,44 +15,40 @@ Rectangle  {
         height: 344
         color: "#22242C"
         radius: 16
-        RowLayout{
-            id: titleBar
-            width: parent.width
-            height: 72
+
+        Image{
+            anchors.top: parent.top
+            anchors.topMargin: 20
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            width:24
+            height: 24
+
+            source: "qrc:/res/image/yvr_close.png"
+            MouseArea{
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: mainWin.hideSubWin()
+            }
+        }
+
+
+        ColumnLayout{
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 18
 
             Text {
-                Layout.leftMargin: 164
+                Layout.topMargin: 34
+                Layout.alignment: Qt.AlignHCenter
                 text: qsTr("播控名称")
                 font.bold: true
                 color: "#FFFFFF"
                 font.pixelSize: 16
             }
 
-            Item {
-                Layout.fillWidth: true
-            }
-
-            Image{
-                Layout.rightMargin: 34
-                Layout.preferredHeight:18
-                Layout.preferredWidth:18
-                source: "qrc:/res/image/yvr_close.png"
-                MouseArea{
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: mainWin.hideSubWin()
-                }
-            }
-        }
-
-        ColumnLayout{
-            anchors.top: titleBar.bottom
-            anchors.topMargin: 12
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 18
-
             YVRTextInput{
                 id: name
+                Layout.topMargin: 34
                 height: 44
                 width: 363
                 textPixel: 14

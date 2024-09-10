@@ -18,41 +18,40 @@ Rectangle {
         anchors.fill: parent
         color: "#22242C"
         radius: 16
-        RowLayout{
-            width: parent.width
-            height: 52
+
+        Image{
+            anchors.top: parent.top
+            anchors.topMargin: 20
+            anchors.right: parent.right
+            anchors.rightMargin: 20
+            width:24
+            height: 24
+            source: "qrc:/res/image/yvr_close.png"
+            MouseArea{
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: mainWin.hideSubWin()
+            }
+        }
+
+
+
+        ColumnLayout {
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 0
+
             Text {
-                Layout.leftMargin: 83
-                Layout.topMargin: 20
+                Layout.topMargin: 34
+                Layout.alignment: Qt.AlignHCenter
                 text: yvr.resourcesListModelAdd.logo === "" ? qsTr("添加 LOGO"): qsTr("更改 LOGO")
                 font.bold: true
                 color: "#FFFFFF"
                 font.pixelSize: 24
             }
 
-            Item {
-                Layout.fillWidth: true
-            }
 
-            Image{
-                Layout.rightMargin: 24
-                width:24
-                height: 24
-                source: "qrc:/res/image/yvr_close.png"
-                MouseArea{
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: mainWin.hideSubWin()
-                }
-            }
-        }
-
-        ColumnLayout {
-            anchors.top: parent.top
-            anchors.topMargin: 80
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 0
             Image {
+                Layout.topMargin: 34
                 Layout.alignment: Qt.AlignHCenter
                 Layout.preferredHeight: 84
                 Layout.preferredWidth: 227
@@ -69,7 +68,7 @@ Rectangle {
 
             Text {
                 Layout.alignment: Qt.AlignHCenter
-                Layout.topMargin: 24
+                Layout.topMargin: 12
                 text: qsTr("请上传322*126px，png/jpg格式LOGO")
                 font.pixelSize: 10
                 font.bold: true
@@ -79,7 +78,7 @@ Rectangle {
             YVRButton{
                 Layout.topMargin: 40
                 width: 220
-                height: 46
+                height: 36
                 showText: qsTr("上传")
                 Layout.alignment: Qt.AlignHCenter
                 onClickSignal: {

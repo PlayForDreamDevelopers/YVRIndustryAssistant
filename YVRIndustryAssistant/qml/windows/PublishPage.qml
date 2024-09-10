@@ -60,7 +60,7 @@ Rectangle{
                     var num = selectAll.visible ? vrList.rowCount() - vrList.getDisable() : vrList.selectCount
                     if(num === 0)
                     {
-                        showToast(qsTr("请先选择设备"))
+                        showToast(qsTr("未选择设备"))
                         return
                     }
 

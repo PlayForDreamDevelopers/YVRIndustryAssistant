@@ -226,15 +226,15 @@ Rectangle {
 
                     Rectangle {
                         Layout.rightMargin: 16
-                        width: 120
-                        height: 30
-                        color: "#606171"
-                        radius: 6
+                        width: 44
+                        height: 26
+                        color: "#555763"
+                        radius: 4
                         Text {
                             anchors.centerIn: parent
-                            font.pixelSize: 14
-                            color: "#D8D8D8"
-                            text: qsTr("上传文件")
+                            font.pixelSize: 12
+                            color: "#C4C4C4"
+                            text: qsTr("上传")
                         }
 
                         MouseArea{
@@ -280,15 +280,15 @@ Rectangle {
 
                     Rectangle{
                         Layout.rightMargin: 16
-                        width: 120
-                        height: 30
-                        color: "#606171"
-                        radius: 6
+                        width: 44
+                        height: 26
+                        color: "#555763"
+                        radius: 4
                         Text {
                             anchors.centerIn: parent
-                            font.pixelSize: 14
-                            color: "#D8D8D8"
-                            text: qsTr("上传海报")
+                            font.pixelSize: 12
+                            color: "#C4C4C4"
+                            text: qsTr("上传")
                         }
 
                         MouseArea{

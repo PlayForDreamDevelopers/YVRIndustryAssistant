@@ -23,9 +23,11 @@ Rectangle {
 
     ColumnLayout {
         spacing: 0
+        width:parent.width
         anchors.horizontalCenter: parent.horizontalCenter
         RowLayout {
             Layout.topMargin: 24
+            Layout.leftMargin: 24
             Layout.preferredHeight: 33
             height: 33
             width: 313
@@ -120,15 +122,16 @@ Rectangle {
 
         Text {
             Layout.topMargin: 18
+            Layout.leftMargin: 24
             text: qsTr("SN: ") + vrItemSn
             font.pixelSize: 16
             color: "#9C9C9C"
         }
 
         RowLayout{
+            Layout.leftMargin: 24
             Layout.topMargin: 62
-            Layout.preferredWidth: 313
-            Layout.preferredHeight: 33
+
             Rectangle{
                 width: 20
                 height: 20
@@ -183,6 +186,7 @@ Rectangle {
             Image {
                 Layout.preferredHeight: 32
                 Layout.preferredWidth: 32
+                Layout.rightMargin: 20
                 source: "qrc:/res/image/yvr_more_btn.png"
                 MouseArea{
                     anchors.fill: parent
