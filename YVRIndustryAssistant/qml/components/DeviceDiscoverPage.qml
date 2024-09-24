@@ -52,7 +52,7 @@ Rectangle {
                 onClickSignal: {
                     subWindow.source = "qrc:/qml/windows/AddDevices.qml"
                     subWindow.item.acceptImport.connect(function(){
-                        root.parent.source = ""
+                        dicoverDevice.source = ""
                         mainWin.showPage(YVRManagerCLS.DeviceManager)
                     })
 

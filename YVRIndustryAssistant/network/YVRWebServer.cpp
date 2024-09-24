@@ -49,6 +49,7 @@ void YVRWebServer::sendCommand(QByteArray &data, QString sn)
 
 void YVRWebServer::close()
 {
+    qInfo("close YVRWebServer");
     for(auto device :m_clients)
     {
         if(device != nullptr)
@@ -171,6 +172,8 @@ void YVRWebServer::socketError(QAbstractSocket::SocketError error)
                 QString sn = item.first;
                 qInfo() << "disconnnect: " << sn;
                 m_clients[sn] = nullptr;
+                pClient->close();
+                pClient->deleteLater();
                 emit deviceStateChange(sn, true, false, false, 2);
                 break;
             }

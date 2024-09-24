@@ -25,6 +25,7 @@ VRMonitor::VRMonitor(QObject *parent) : QObject(parent)
 
 VRMonitor::~VRMonitor()
 {
+    qInfo("close VRMonitor");
     m_pWebServer->close();
 }
 
@@ -202,16 +203,17 @@ void VRMonitor::loadDevices(QString path)
                     if(sn.size() <11)
                         continue;
 
-                    if(!Settings::Instance().containsDevice(sn))
+                    if(!m_pVRList->contains(sn))
                     {
                         int id = Settings::Instance().getDeviceId(sn);
                         m_pVRList->add(sn, "默认",QString("%1").arg(id, 3, 10, QLatin1Char('0')));
-                    }
+                  }
               }
            }
         }
       }
 
+      m_pVRListDiscover->clear(true);
       m_pVRList->refresh(true);
       m_pVRList->save();
 }

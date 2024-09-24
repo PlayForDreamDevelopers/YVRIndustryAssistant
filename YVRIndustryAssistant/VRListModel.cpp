@@ -410,6 +410,11 @@ QStringList VRListModel::getGroups()
     return m_groups;
 }
 
+bool compare(const YVRDevice &a, const YVRDevice &b)
+{
+    return b.id.toInt() >  a.id.toInt();
+}
+
 
 void VRListModel::refresh(bool reset)
 {
@@ -417,11 +422,13 @@ void VRListModel::refresh(bool reset)
     {
         beginResetModel();
         m_data = m_dataMap.values();
+        qSort(m_data.begin(), m_data.end(), compare);
         endResetModel();
 
     }else
     {
         m_data = m_dataMap.values();
+        qSort(m_data.begin(), m_data.end(), compare);
         QModelIndex topleft = createIndex(0,0);
         QModelIndex bottomRight = createIndex(m_dataMap.size() - 1,7);
         dataChanged(topleft, bottomRight);
@@ -432,7 +439,7 @@ void VRListModel::clear()
 {
     beginResetModel();
     m_dataMap.clear();
-    m_data = m_dataMap.values();
+    m_data.clear();
     endResetModel();
 
     m_onlineCount = 0;

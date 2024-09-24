@@ -24,6 +24,7 @@ const int YVRWebServerPort = 50208;
 
 YVRManager::YVRManager(QObject *parent) : QObject(parent)
 {
+    qInfo("app satrt");
     m_monitor = new VRMonitor(this);
     m_UDPBroadCast = new ConnectManager(this);
     m_UDPBroadCast->startUDPBroadCast(YVRWebServerPort - 1);
@@ -44,6 +45,8 @@ YVRManager::~YVRManager()
 
    if(m_resourcesListAdd != nullptr)
        m_resourcesListAdd->save();
+
+    qInfo("app close");
 }
 
 void YVRManager::mainWinsizeChange()
@@ -183,7 +186,7 @@ void YVRManager::showDeviceExampleExcel()
         dir.mkdir(res);
         QFile file(res+ "example.csv");
         file.open(QIODevice::Truncate |QIODevice::WriteOnly);
-        file.write("1,D2HD232328D9000813\r\n2,D2HD232328D9000813\r\n3,ZTR49R160019");
+        file.write("D2HD232328D9000813\r\nD2HD232328D9000813\r\nZTR49R160019");
         file.close();
     }
 
