@@ -232,11 +232,13 @@ void VRListModel::modifyDevice(QString sn, QString id,  QString group)
         }
     }
 
-    Settings::Instance().modiftyDevices(sn, id.toInt());
 
-    QModelIndex topleft = createIndex(row, 3);
-    QModelIndex bottomRight = createIndex(row,4);
-    dataChanged(topleft, bottomRight);
+    Settings::Instance().modiftyDevices(sn, id.toInt());
+    refresh();
+
+//    QModelIndex topleft = createIndex(row, 3);
+//    QModelIndex bottomRight = createIndex(row,4);
+//    dataChanged(topleft, bottomRight);
 }
 
 void VRListModel::modiftyGroup(bool add, QString group)
@@ -301,7 +303,7 @@ QVariant VRListModel::getPlayVRList(int index)
     QList<YVRPlayDevice> data;
     int count = 0;
     int disableCount = 0;
-    for(auto & item : m_dataMap)
+    for(auto & item : m_data)
     {
 
         YVRPlayDevice device;

@@ -50,6 +50,11 @@ void JsonFileParse::loadFile()
         }
     }
 
+    if(m_videoGroups.isEmpty())
+    {
+        m_videoGroups.append("默认");
+    }
+
     file.setFileName(QString(m_appLocalDataLocation + "/configForDevices.dat"));
     if(file.exists())
     {
