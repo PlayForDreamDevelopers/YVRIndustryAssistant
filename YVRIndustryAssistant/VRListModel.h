@@ -33,7 +33,7 @@ class VRListModel : public QAbstractListModel
 public:
     explicit VRListModel(QObject *parent = nullptr);
 
-    void add(QString sn, QString group, QString id, bool offline = true);
+    void add(QString sn, QString group, QString id);
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;

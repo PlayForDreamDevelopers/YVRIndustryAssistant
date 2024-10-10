@@ -222,7 +222,7 @@ void VRMonitor::addDiscoverDeice(bool all)
 {
     for(YVRDiscoverDevice& item : m_pVRListDiscover->getAllDevices(all))
     {
-          m_pVRList->add(item.sn, item.group, item.id, false);
+          m_pVRList->add(item.sn, item.group, item.id);
     }
 
     m_pVRListDiscover->clear(all);
