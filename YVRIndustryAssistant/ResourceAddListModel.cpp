@@ -240,6 +240,36 @@ void ResourceAddListModel::update()
     dataChanged(start_index, end_index);
 }
 
+void ResourceAddListModel::stoppublish(int id)
+{
+    QList<FileInfo>& tmp = *m_data;
+
+   int pos = -1;
+   for (int i = 0; i < tmp.size(); ++i) {
+       if (tmp[i].index == id) {
+           pos = i;
+           break;
+       }
+   }
+
+   tmp[pos].prePlayTime.clear();
+}
+
+void ResourceAddListModel::publish(int id)
+{
+     QList<FileInfo>& tmp = *m_data;
+
+    int pos = -1;
+    for (int i = 0; i < tmp.size(); ++i) {
+        if (tmp[i].index == id) {
+            pos = i;
+            break;
+        }
+    }
+
+    tmp[pos].prePlayTime =  QDateTime::currentDateTime().toString("yyyyMMdd hh:mm");
+}
+
 int ResourceAddListModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())

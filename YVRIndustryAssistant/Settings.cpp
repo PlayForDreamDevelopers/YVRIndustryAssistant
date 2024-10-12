@@ -73,6 +73,7 @@ void Settings::load()
             info.index = itemObj["index"].toInt();
             info.showName = itemObj["showName"].toString();
             info.describe = itemObj["describe"].toString();
+            info.prePlayTime = itemObj["prePlayTime"].toString();
 
             info.groups.clear();
             info.groups.append(list[i].toString());
@@ -214,6 +215,7 @@ void Settings::getShowFileInfos(QList<ShowFileInfo> &showinfos)
                 showInfo.id = info.index;
                 showInfo.type = info.type;
                 showInfo.showName = info.showName;
+                showInfo.prePlayTime = info.prePlayTime;
                 showinfos.append(showInfo);
             }
         }
@@ -427,6 +429,7 @@ void Settings::deploymentLocal(QString desPath)
             obj["groups"] = QJsonArray::fromStringList(info.groups);
             obj["realPoster"] = info.realPoster;
             obj["realFile"] = info.realFile;
+            obj["prePlayTime"] = info.prePlayTime;
 
             itemArr.append(obj);
         }

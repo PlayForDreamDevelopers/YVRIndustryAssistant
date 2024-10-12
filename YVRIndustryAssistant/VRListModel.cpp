@@ -45,12 +45,16 @@ void VRListModel::Init(QJsonArray& snArr)
     refresh(true);
 }
 
-void VRListModel::add(QString sn, QString group, QString id)
+void VRListModel::add(QString sn, QString group, QString id, bool offline)
 {
+    if(!offline)
+        m_onlineCount++;
+
     YVRDevice device;
     device.sn = sn;
     device.group = group;
     device.id = id;
+    device.offline = offline;
     device.video = -1;
     m_dataMap[device.sn] = device;
 }

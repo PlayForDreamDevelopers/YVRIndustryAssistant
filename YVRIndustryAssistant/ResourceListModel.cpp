@@ -69,6 +69,8 @@ void ResourceListModel::stoppublish(int id)
     auto start_index = createIndex(pos, 4);
     auto end_index = createIndex(pos, 4);
     dataChanged(start_index, end_index);
+
+
 }
 
 bool ResourceListModel::getHasPublish()

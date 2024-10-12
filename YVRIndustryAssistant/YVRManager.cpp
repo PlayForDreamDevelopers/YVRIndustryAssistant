@@ -150,6 +150,7 @@ void YVRManager::pause(int index)
 {
     m_monitor->stopPlay(index);
     m_resourcesList->stoppublish(index);
+    m_resourcesListAdd->stoppublish(index);
 }
 
 
@@ -162,6 +163,7 @@ void YVRManager::play(int index, bool loopPlay,  bool selectAll)
     m_monitor->startPlay(index, std::move(obj), selectAll);
 
     m_resourcesList->publish(index);
+    m_resourcesListAdd->publish(index);
 }
 
 void YVRManager::clearPlan()
@@ -229,6 +231,11 @@ bool YVRManager::hasPulished()
 
 QVariant YVRManager::resourcesList()
 {
+    if(m_resourcesListAdd == nullptr)
+    {
+        m_resourcesListAdd = new ResourceAddListModel(this);
+        m_resourcesListAdd->showGroup(0);
+    }
 
     if(m_resourcesList == nullptr)
     {
