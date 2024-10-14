@@ -35,6 +35,7 @@ struct FileInfo
   YVRResourceType type;
   qint64 size;
   QString md5;
+  QString prePlayTime = "";
   QStringList groups = {"默认"};
 };
 
