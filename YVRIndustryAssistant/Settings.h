@@ -1,6 +1,7 @@
 ﻿#ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <QJsonArray>
 #include <QMap>
 #include <QObject>
 #include "DefineData.h"
@@ -44,8 +45,10 @@ private:
     bool m_firstPalyControl = true;
     bool m_firstAddDevice = true;
     bool m_control = false;
+    QJsonArray m_preTimesJson;
     QMap<QString, int> m_allIndex;
     QMap<int, QList<FileInfo>> m_fileInfos;
+    QStringList m_preTimes;
 };
 
 #endif // SETTINGS_H

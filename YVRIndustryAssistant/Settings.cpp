@@ -37,6 +37,7 @@ Settings::Settings(QObject *parent): QObject(parent)
     m_firstAddDevice = obj["firstAddDevice"].toBool(true);
     m_firstPalyControl = obj["firstPalyControl"].toBool(true);
     m_control = obj["control"].toBool(false);
+    m_preTimesJson = obj["times"].toArray();
 
     file.close();
 }
@@ -80,6 +81,7 @@ void Settings::load()
             info.groups.append(list[i].toString());
 
             _data.append(info);
+            m_preTimes.append("");
         }
 
 
@@ -90,6 +92,15 @@ void Settings::load()
         info.groups.append(list[i].toString());
         _data.append(info);
         m_fileInfos[i] = std::move(_data);
+    }
+
+    if(m_preTimesJson.size() == m_preTimes.size())
+    {
+        m_preTimes.clear();
+        for(auto item : m_preTimesJson)
+        {
+            m_preTimes.append(item.toString());
+        }
     }
 }
 
@@ -216,7 +227,11 @@ void Settings::getShowFileInfos(QList<ShowFileInfo> &showinfos)
                 showInfo.id = info.index;
                 showInfo.type = info.type;
                 showInfo.showName = info.showName;
-                showInfo.prePlayTime = info.prePlayTime;
+                if(info.index >= 0)
+                {
+                    showInfo.prePlayTime = m_preTimes[info.index];
+                }
+
                 showinfos.append(showInfo);
             }
         }
@@ -254,6 +269,8 @@ void Settings::deployment(QString desPath)
     }
 
     int index = 1000;
+
+    m_preTimes.clear();
 
     for(auto &item : m_fileInfos)
     {
@@ -315,7 +332,6 @@ void Settings::deployment(QString desPath)
                 obj["poster"] = "";
             }
 
-
             obj["MD5"]= info.md5;
             obj["path"] = fileName + "/";
             obj["index"] = index % 1000;
@@ -326,6 +342,7 @@ void Settings::deployment(QString desPath)
             info.index = index % 1000;
 
             arr.append(obj);
+            m_preTimes.append("");
             index++;
         }
     }
@@ -438,25 +455,21 @@ void Settings::deploymentLocal(QString desPath)
         files.append(itemArr);
     }
 
+    save();
     JsonFileParse::ins()->deploymentLocal(files);
 }
 
 void Settings::publishInfo(bool start, int index)
 {
-    for(auto &item : m_fileInfos)
-    {
-        for(auto & info : item)
-        {
+    if(index >= m_preTimes.size() || index < 0)
+        return;
 
-            if(info.index == index)
-            {
-                if(start)
-                    info.prePlayTime = QDateTime::currentDateTime().toString("yyyyMMdd hh:mm");
-                else
-                    info.prePlayTime.clear();
-            }
-        }
-    }
+    if(start)
+        m_preTimes[index] = QDateTime::currentDateTime().toString("yyyyMMdd hh:mm");
+    else
+        m_preTimes[index].clear();
+
+    save();
 }
 
 void Settings::save()
@@ -469,6 +482,7 @@ void Settings::save()
     obj["firstAddDevice"] = m_firstAddDevice;
     obj["firstPalyControl"] = m_firstPalyControl;
     obj["control"] = m_control;
+    obj["times"] = QJsonArray::fromStringList(m_preTimes);
 
     doc.setObject(obj);
     remoteFile.open(QIODevice::WriteOnly | QIODevice::Truncate);
