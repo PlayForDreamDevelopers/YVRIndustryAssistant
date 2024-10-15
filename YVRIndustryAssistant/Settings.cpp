@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QUrl>
+#include <QTime>
 #include "plugins/JsonFileParse.h"
 
 Settings::Settings(QObject *parent): QObject(parent)
@@ -438,6 +439,24 @@ void Settings::deploymentLocal(QString desPath)
     }
 
     JsonFileParse::ins()->deploymentLocal(files);
+}
+
+void Settings::publishInfo(bool start, int index)
+{
+    for(auto &item : m_fileInfos)
+    {
+        for(auto & info : item)
+        {
+
+            if(info.index == index)
+            {
+                if(start)
+                    info.prePlayTime = QDateTime::currentDateTime().toString("yyyyMMdd hh:mm");
+                else
+                    info.prePlayTime.clear();
+            }
+        }
+    }
 }
 
 void Settings::save()

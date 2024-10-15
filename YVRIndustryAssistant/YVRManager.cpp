@@ -150,7 +150,7 @@ void YVRManager::pause(int index)
 {
     m_monitor->stopPlay(index);
     m_resourcesList->stoppublish(index);
-    m_resourcesListAdd->stoppublish(index);
+    Settings::Instance().publishInfo(false, index);
 }
 
 
@@ -163,7 +163,7 @@ void YVRManager::play(int index, bool loopPlay,  bool selectAll)
     m_monitor->startPlay(index, std::move(obj), selectAll);
 
     m_resourcesList->publish(index);
-    m_resourcesListAdd->publish(index);
+    Settings::Instance().publishInfo(true, index);
 }
 
 void YVRManager::clearPlan()

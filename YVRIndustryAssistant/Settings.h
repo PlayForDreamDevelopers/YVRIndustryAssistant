@@ -33,6 +33,8 @@ public:
     void deployment(QString desPath);
     void deploymentLocal(QString desPath);
 
+    void publishInfo(bool start, int index);
+
     void save();
     void clear();
 

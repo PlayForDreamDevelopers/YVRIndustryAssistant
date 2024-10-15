@@ -28,8 +28,6 @@ public:
     Q_INVOKABLE int addOrDelGroup(int index, bool add = false);
     Q_INVOKABLE void showGroup(int index);
     Q_INVOKABLE void update();
-    void stoppublish(int id);
-    void publish(int id);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
